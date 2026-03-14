@@ -21,13 +21,12 @@
             color: white; overflow: hidden;
         }
 
-        /* POPRAWKA: Płynniejsze wideo w tle bez "skakania" */
         #bg-video {
             position: fixed; 
             top: 50%; left: 50%;
-            width: 100vw; height: 56.25vw; /* Proporcja 16:9 */
-            min-height: 100vh; min-width: 177.77vh; /* Zapewnia pełne pokrycie */
-            transform: translate(-50%, -50%); /* Idealne centrowanie */
+            width: 100vw; height: 56.25vw;
+            min-height: 100vh; min-width: 177.77vh;
+            transform: translate(-50%, -50%);
             z-index: -3; pointer-events: none;
             filter: brightness(30%);
             background: #000; border: none;
@@ -168,7 +167,7 @@
         <div class="highlight-box">Mieszkanie gotowe do zamieszkania - nie trzeba malować.</div>
         <ul>
             <li><strong>Kuchnia:</strong> Płyta gazowa, piekarnik elektryczny w zabudowie, zmywarka.</li>
-            <li><strong>Wyposażenie:</strong> Cichy i oszczędny klimatyzator v salonie, TV Sharp.</li>
+            <li><strong>Wyposażenie:</strong> Cichy i oszczędny klimatyzator w salonie, TV Sharp.</li>
             <li><strong>Status:</strong> Sprzedaż z promesą bankową.</li>
         </ul>
     </div>
@@ -199,7 +198,7 @@
         <div style="margin-top:20px; border:1px solid #444; border-radius:4px; height:250px; overflow:hidden;">
             <iframe 
                 width="100%" height="100%" frameborder="0" style="border:0"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2441.761014815259!2d21.1119561771123!3d52.28405525316335!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ecda4579c884f%3A0xc0747ec2e5c98d6!2sWarszawska%2046A%2C%2005-091%20Z%C4%85bki!5e0!3m2!1spl!2spl!4v1709500000000!5m2!1spl!2spl" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2441.93290372373!2d21.11470417724911!3d52.2627993552554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ed277884f0469%3A0xe549b06214f4e70e!2sWarszawska%2046A%2C%2005-091%20Z%C4%85bki!5e0!3m2!1spl!2spl!4v1710520000000!5m2!1spl!2spl" 
                 allowfullscreen>
             </iframe>
         </div>
@@ -227,7 +226,8 @@
         document.getElementById(id).classList.add('active');
     }
 
-    const mediaItems = ['https://www.youtube.com/embed/47f0x0rzMrQ?autoplay=1'];
+    // LISTA MEDIÓW (Naprawiono parametry rel=0 dla braku polecanych z zewnątrz)
+    const mediaItems = ['https://www.youtube.com/embed/47f0x0rzMrQ?autoplay=1&rel=0'];
     for(let i=1; i<=22; i++) mediaItems.push(`images/foto${i}.jpg`);
     let currentIndex = 0;
 
@@ -241,7 +241,16 @@
         const body = document.getElementById('modal-body');
         const item = mediaItems[currentIndex];
         if(item.includes('youtube.com')) {
-            body.innerHTML = `<iframe width="100%" height="100%" src="${item}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            // Dodano skrypt nasłuchujący zakończenia filmu w galerii
+            body.innerHTML = `<iframe id="player-iframe" width="100%" height="100%" src="${item}&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            
+            // Logika przełączania na foto1.jpg po zakończeniu filmu (dla galerii)
+            window.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                if (data.event === 'infoDelivery' && data.info && data.info.playerState === 0) {
+                    nextMedia(); // Przełącza na pierwsze zdjęcie (foto1.jpg)
+                }
+            };
         } else {
             body.innerHTML = `<img src="${item}" style="max-width:100%; max-height:100%;">`;
         }
