@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+<html lang="pl">
+<head>
+    <title>Warszawska 46A, Ząbki - 620 000 zł</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="Mieszkanie 53m2 w Ząbkach – Warszawska 46A. Świetna komunikacja z Warszawą (Metro Targówek 7 min), darmobusy, klimatyzacja i parking. Sprzedaż bezpośrednia od właściciela." />
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://daro521.github.io/warszawska46a/" />
+    <meta property="og:title" content="Warszawska 46A, Ząbki - Bezpośrednio" />
+    <meta property="og:description" content="Mieszkanie 53m2 w Ząbkach – Warszawska 46A. Świetna komunikacja z Warszawą (Metro Targówek 7 min), darmobusy, klimatyzacja i parking. Sprzedaż bezpośrednia od właściciela." />
+    <meta property="og:image" content="https://daro521.github.io/warszawska46a/images/foto2.jpg" />
+
+    <style>
+        body, html { 
+            margin: 0; padding: 0; height: 100%; 
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #000;
+            display: flex; align-items: center; justify-content: center;
+            color: white; overflow: hidden;
+        }
+
+        #bg-video {
+            position: fixed; top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            z-index: -3; transform: translate(-50%, -50%);
+            object-fit: cover; filter: brightness(30%);
+            background: #000;
+        }
+
+        .overlay {
+            position: fixed; width: 100%; height: 100%; top: 0; left: 0;
+            background: linear-gradient(to right, rgba(75, 18, 18, 0.4), rgba(36, 11, 54, 0.6));
+            z-index: -2;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.9); padding: 35px; border-radius: 4px;
+            max-width: 850px; width: 95%; max-height: 88vh;
+            text-align: center; box-shadow: 0 10px 50px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.1); overflow-y: auto;
+            backdrop-filter: blur(15px);
+        }
+
+        h1 { font-weight: 200; letter-spacing: 6px; text-transform: uppercase; margin: 0; font-size: 1.7rem; }
+        .subtitle { color: #f39c12; letter-spacing: 1px; margin: 15px 0 25px 0; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+
+        nav { border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px 0; margin-bottom: 25px; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        nav a { color: #fff; text-decoration: none; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; opacity: 0.6; transition: 0.3s; cursor: pointer; padding: 5px 8px; }
+        nav a:hover { opacity: 1; color: #f39c12; }
+
+        .content { display: none; text-align: left; font-size: 13.5px; line-height: 1.6; color: #eee; }
+        .content.active { display: block; animation: fadeIn 0.4s ease-out; }
+
+        .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-top: 15px; }
+        .photo-grid img, .video-thumb { width: 100%; height: 95px; object-fit: cover; border-radius: 2px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
+
+        .video-thumb { 
+            position: relative; 
+            background-image: url('images/foto2.jpg'); 
+            background-size: cover; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .video-thumb::before, .video-thumb::after {
+            content: "••••••••••••";
+            position: absolute; width: 100%; left: 0;
+            color: rgba(255,255,255,0.4); font-size: 10px; letter-spacing: 4px; text-align: center;
+        }
+        .video-thumb::before { top: 2px; }
+        .video-thumb::after { bottom: 2px; }
+
+        #modal { display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); align-items: center; justify-content: center; }
+        #modal-content { position: relative; width: 90%; height: 80%; display: flex; align-items: center; justify-content: center; }
+        #modal-content img, #modal-content video { max-width: 100%; max-height: 100%; border: 1px solid #444; }
+        
+        .close-btn { position: absolute; top: -50px; right: 0; font-size: 50px; color: #f39c12; cursor: pointer; font-weight: bold; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); font-size: 40px; color: #fff; cursor: pointer; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; z-index: 2100; }
+        .prev { left: -60px; }
+        .next { right: -60px; }
+
+        ul { list-style: none; padding: 0; }
+        ul li { margin-bottom: 6px; position: relative; padding-left: 18px; }
+        ul li::before { content: "•"; color: #f39c12; position: absolute; left: 0; font-weight: bold; }
+        .highlight-box { background: rgba(243, 156, 18, 0.1); border-left: 3px solid #f39c12; padding: 12px; margin: 15px 0; }
+        
+        .contact-link { color: #f39c12; text-decoration: none; font-weight: bold; font-size: 1.2rem; display: inline-block; margin: 5px 0; }
+        .price-tag { font-size: 2rem; color: #fff; font-weight: 200; margin-bottom: 5px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .card::-webkit-scrollbar { width: 4px; }
+        .card::-webkit-scrollbar-thumb { background: #f39c12; border-radius: 10px; }
+
+        @media (max-width: 768px) {
+            .prev { left: 0px; }
+            .next { right: 0px; }
+            .close-btn { top: -60px; right: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<video autoplay muted loop playsinline preload="auto" id="bg-video">
+    <source src="film0.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<div id="modal">
+    <div id="modal-content">
+        <span class="close-btn" onclick="closeModal()">×</span>
+        <span class="nav-btn prev" onclick="prevMedia()">❮</span>
+        <div id="modal-body" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;"></div>
+        <span class="nav-btn next" onclick="nextMedia()">❯</span>
+    </div>
+</div>
+
+<div class="card">
+    <header>
+        <h1>Warszawska 46A</h1>
+        <p class="subtitle">Ząbki | 53 m2 | 2 Pokoje | Loggia | Klimatyzacja | Światłowód</p>
+    </header>
+
+    <nav>
+        <a onclick="tab('opis')">O Mieszkaniu</a>
+        <a onclick="tab('galeria')">Galeria</a>
+        <a onclick="tab('standard')">Standard</a>
+        <a onclick="tab('lokalizacja')">Lokalizacja</a>
+        <a onclick="tab('kontakt')">Kontakt i cena</a>
+    </nav>
+
+    <div id="opis" class="content active">
+        <div class="highlight-box">
+            <strong>Stan:</strong> Mieszkanie świeżo odmalowane, czyste i nie wymaga żadnych nakładów finansowych. Gotowe do zamieszkania.
+        </div>
+        <ul>
+            <li><strong>Wyposażenie:</strong> Wszechstronne wyposażenie, jeden z pokoi umeblowany dla dwójki dzieci (z łatwością możliwa zmiana aranżacji).</li>
+            <li><strong>Media:</strong> Cichy i oszczędny klimatyzator, Internet światłowodowy i antena satelitarna.</li>
+            <li><strong>Ogrzewanie:</strong> Gazowe (piec na korytarzu), indywidualny piec ze sterownikiem (pełna niezależność).</li>
+            <li><strong>Osiedle z 2003 r.:</strong> Kameralne, bezpieczne i ogrodzone, monitoring (kamery).</li>
+            <li><strong>Atuty:</strong> Duża loggia (6 m²), duża piwnica i prywatne miejsce parkingowe.</li>
+        </ul>
+    </div>
+
+    <div id="galeria" class="content">
+        <p style="font-size: 13px; margin-bottom: 10px;">Wideo-prezentacja oraz 22 zdjęcia wnętrza (Wykonane 22 zdjęcia)</p>
+        <div class="photo-grid">
+            <div class="video-thumb" onclick="openGallery(0)">
+                <span style="font-size: 30px;">▶</span>
+            </div>
+            <script>
+                for(let i=1; i<=22; i++) {
+                    document.write(`<img src="images/foto${i}.jpg" alt="Mieszkanie Ząbki Warszawska 46A - Zdjęcie ${i}" onclick="openGallery(${i})">`);
+                }
+            </script>
+        </div>
+    </div>
+
+    <div id="standard" class="content">
+        <div class="highlight-box">Mieszkanie gotowe do zamieszkania - nie trzeba malować.</div>
+        <ul>
+            <li><strong>Kuchnia:</strong> Płyta gazowa, piekarnik elektryczny w zabudowie, zmywarka.</li>
+            <li><strong>Wyposażenie:</strong> Cichy i oszczędny klimatyzator w salonie, TV Sharp.</li>
+            <li><strong>Status:</strong> Sprzedaż z promesą bankową.</li>
+        </ul>
+    </div>
+
+    <div id="lokalizacja" class="content">
+        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            <div style="flex: 1; min-width: 250px;">
+                <strong style="color: #f39c12;">🚆 Transport i Darmowa Komunikacja:</strong>
+                <p style="font-size: 12px; margin-top: 5px;">Ząbki oferują <strong>darmową komunikację z Warszawą</strong> dla mieszkańców!</p>
+                <ul style="font-size: 12px;">
+                    <li><strong>Linie Darmowe (Z1, Z2, Z3):</strong> Do Metra Trocka i Kondratowicza.</li>
+                    <li><strong>Linie ZTM (199, 245):</strong> Do stacji <strong>Metro Targówek (ok. 7-10 min)</strong>.</li>
+                    <li><strong>Linia 145:</strong> Bezpośrednie połączenie z Warszawą.</li>
+                    <li><strong>Linia N62 (Nocna):</strong> Powrót z Dworca Centralnego pod sam dom.</li>
+                    <li><strong>PKP Ząbki (10 min pieszo):</strong> 7 minut do Metra Wileńska.</li>
+                </ul>
+            </div>
+            <div style="flex: 1; min-width: 250px;">
+                <strong style="color: #f39c12;">🏙️ Okolica i Zakupy:</strong>
+                <ul style="font-size: 12px;">
+                    <li>🛒 <strong>Biedronka (500 m)</strong> | Lidl / Kaufland (350-500 m).</li>
+                    <li>🛍️ M1 Marki (5 min) | CH Targówek (10 min).</li>
+                    <li>🏫 Szkoła Podst. / Liceum / Przedszkole: 400-800 m.</li>
+                    <li>⛪ Kościół: 500 m | Basen i MOSiR: 10 min pieszo.</li>
+                </ul>
+            </div>
+        </div>
+        <div style="margin-top:20px; border:1px solid #444; border-radius:4px; height:250px; overflow:hidden;">
+            <iframe 
+                width="100%" height="100%" frameborder="0" style="border:0"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2442.224169993339!2d21.111816076949392!3d52.284705053629434!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ecc252069b62f%3A0x892994463d14876b!2sWarszawska%2046A%2C%2005-091%20Z%C4%85bki!5e0!3m2!1spl!2spl!4v1711200000000!5m2!1spl!2spl" 
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <div id="kontakt" class="content">
+        <div style="text-align: center; padding-top: 10px;">
+            <div class="price-tag">620 000 zł</div>
+            <p style="color: #f39c12; font-weight: bold; margin-bottom: 20px;">Sprzedaż z promesą bankową.</p>
+            <p style="margin-bottom: 5px;">Zadzwoń bezpośrednio:</p>
+            <a href="tel:504361761" class="contact-link">📞 504 361 761</a>
+            <p style="margin: 15px 0 5px 0;">Napisz e-mail:</p>
+            <a href="mailto:kaczorek@gmail.com" class="contact-link" style="font-size: 1rem;">✉️ kaczorek@gmail.com</a>
+            
+            <p style="margin-top: 30px; font-size: 10px; opacity: 0.5; line-height: 1.2;">
+                Niniejsze ogłoszenie ma charakter informacyjny i nie stanowi oferty handlowej w rozumieniu art. 66 §1 Kodeksu Cywilnego.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function tab(id) {
+        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    const mediaItems = ['film0.mp4'];
+    for(let i=1; i<=22; i++) mediaItems.push(`images/foto${i}.jpg`);
+    let currentIndex = 0;
+
+    function openGallery(index) {
+        currentIndex = index;
+        updateModal();
+        document.getElementById('modal').style.display = 'flex';
+    }
+
+    function updateModal() {
+        const body = document.getElementById('modal-body');
+        const item = mediaItems[currentIndex];
+        if(item.endsWith('.mp4')) {
+            body.innerHTML = `<video controls autoplay style="max-width:100%; max-height:100%;"><source src="${item}" type="video/mp4"></video>`;
+        } else {
+            body.innerHTML = `<img src="${item}" style="max-width:100%; max-height:100%;">`;
+        }
+    }
+
+    function prevMedia() { currentIndex = (currentIndex > 0) ? currentIndex - 1 : mediaItems.length - 1; updateModal(); }
+    function nextMedia() { currentIndex = (currentIndex < mediaItems.length - 1) ? currentIndex + 1 : 0; updateModal(); }
+    function closeModal() { document.getElementById('modal').style.display = 'none'; document.getElementById('modal-body').innerHTML = ''; }
+
+    window.addEventListener('keydown', (e) => {
+        if(document.getElementById('modal').style.display === 'flex') {
+            if(e.key === 'ArrowRight') nextMedia();
+            if(e.key === 'ArrowLeft') prevMedia();
+            if(e.key === 'Escape') closeModal();
+        }
+    });
+</script>
+
+</body>
+</html>
