@@ -21,12 +21,12 @@
             color: white; overflow: hidden;
         }
 
+        /* ZMIANA: Styl dla filmu z YouTube w tle */
         #bg-video {
-            position: fixed; top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%;
-            z-index: -3; transform: translate(-50%, -50%);
-            object-fit: cover; filter: brightness(30%);
-            background: #000;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -3; pointer-events: none;
+            filter: brightness(30%);
+            background: #000; border: none;
         }
 
         .overlay {
@@ -74,7 +74,7 @@
 
         #modal { display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); align-items: center; justify-content: center; }
         #modal-content { position: relative; width: 90%; height: 80%; display: flex; align-items: center; justify-content: center; }
-        #modal-content img, #modal-content video { max-width: 100%; max-height: 100%; border: 1px solid #444; }
+        #modal-content img, #modal-content iframe { max-width: 100%; max-height: 100%; border: 1px solid #444; }
         
         .close-btn { position: absolute; top: -50px; right: 0; font-size: 50px; color: #f39c12; cursor: pointer; font-weight: bold; }
         .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); font-size: 40px; color: #fff; cursor: pointer; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; z-index: 2100; }
@@ -102,9 +102,10 @@
 </head>
 <body>
 
-<video autoplay muted loop playsinline preload="auto" id="bg-video">
-    <source src="film0.mp4" type="video/mp4">
-</video>
+<iframe id="bg-video" 
+    src="https://www.youtube.com/embed/47f0x0rzMrQ?autoplay=1&mute=1&loop=1&playlist=47f0x0rzMrQ&controls=0&showinfo=0&rel=0&iv_load_policy=3&disablekb=1" 
+    allow="autoplay; encrypted-media">
+</iframe>
 
 <div class="overlay"></div>
 
@@ -193,7 +194,7 @@
         <div style="margin-top:20px; border:1px solid #444; border-radius:4px; height:250px; overflow:hidden;">
             <iframe 
                 width="100%" height="100%" frameborder="0" style="border:0"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2442.224169993339!2d21.111816076949392!3d52.284705053629434!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ecc252069b62f%3A0x892994463d14876b!2sWarszawska%2046A%2C%2005-091%20Z%C4%85bki!5e0!3m2!1spl!2spl!4v1711200000000!5m2!1spl!2spl" 
+                src="http://googleusercontent.com/maps.google.com/4" 
                 allowfullscreen>
             </iframe>
         </div>
@@ -221,7 +222,8 @@
         document.getElementById(id).classList.add('active');
     }
 
-    const mediaItems = ['film0.mp4'];
+    // ZMIANA: Dodano link YouTube do listy mediów
+    const mediaItems = ['https://www.youtube.com/embed/47f0x0rzMrQ?autoplay=1'];
     for(let i=1; i<=22; i++) mediaItems.push(`images/foto${i}.jpg`);
     let currentIndex = 0;
 
@@ -234,8 +236,9 @@
     function updateModal() {
         const body = document.getElementById('modal-body');
         const item = mediaItems[currentIndex];
-        if(item.endsWith('.mp4')) {
-            body.innerHTML = `<video controls autoplay style="max-width:100%; max-height:100%;"><source src="${item}" type="video/mp4"></video>`;
+        // ZMIANA: Obsługa wyświetlania YouTube w galerii
+        if(item.includes('youtube.com')) {
+            body.innerHTML = `<iframe width="100%" height="100%" src="${item}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
         } else {
             body.innerHTML = `<img src="${item}" style="max-width:100%; max-height:100%;">`;
         }
